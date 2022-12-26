@@ -76,7 +76,7 @@ def cal_cd_acc(loader, model, flag=False):
 def train_target(args):
     best_acc=0
     model = PcdmViT()
-    path_checkpoint = args.resumepath #'./finetune_model/netCD_iter_10800.pth' #'./epochs/netCD_epoch_7.pth'
+    path_checkpoint = args.resumepath
     checkpoint = torch.load(path_checkpoint, map_location=torch.device('cpu'))
     model.load_state_dict(checkpoint)
     CDNet = model.to(device, dtype=torch.float)
@@ -99,9 +99,7 @@ def train_target(args):
     args.out_file.flush()
     print(log_str+'\n')
     model.train()
-    # netF.train()
-    # netB.train()
-    # netC.train()
+
 
     old_pry = 0
     while iter_num < max_iter:
