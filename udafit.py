@@ -121,8 +121,6 @@ def train_target(args):
         iter_num += 1
         lr_scheduler(optimizer, iter_num=iter_num, max_iter=max_iter, power=0.75)
 
-        # features_test = netB(netF(inputs_test))
-        # outputs_test = netC(features_test)
         outputs_test = model(data1,data2)
 
         softmax_out = nn.Softmax(dim=1)(outputs_test)
