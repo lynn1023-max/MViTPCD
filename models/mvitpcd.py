@@ -244,9 +244,10 @@ class PcdmViT(nn.Module):
         )
 
         self.conv_branch1 = nn.Sequential(
-            nn.Conv2d(dims[-1]*2, dims[-1], kernel_size=3, stride=2, padding=3, dilation=3),
+            nn.Conv2d(dims[-1]*2, dims[-1], kernel_size=3, stride=1, padding=3, dilation=3),
             nn.BatchNorm2d(dims[-1]),
             nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         )
 
         self.pool = nn.AvgPool2d(2)
@@ -273,6 +274,8 @@ class PcdmViT(nn.Module):
 if __name__ == '__main__':
     rgb=torch.randn((1, 3, 128, 128))
     pvit = PcdmViT()  # 1.33M
+    out = pvit(rgb,rgb)
+    print(out.shape)
 
     from thop import profile
     sflops, sparams = profile(pvit, inputs=(rgb,rgb))
